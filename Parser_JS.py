@@ -541,8 +541,7 @@ class Parser:
             op = self.token.name
         return left
 
-    # Этот метод обрабатывает пары токенов вида: <key> <id>
-    # или вида: <key> <id> = <right_side>
+    # Этот метод обрабатывает пары токенов
     def declaration(self) -> Node:
         # Сохраняем тип переменной или массива
         data_type = self.token.name
@@ -550,8 +549,6 @@ class Parser:
         if self.token.value == "ID":
             # Проверяем объявлена ли уже переменная.
             # Если объявлена, то выкидываем ошибку.
-            # if self.symbolTable[len(self.symbolTable) - 1].isExist(self.token.name)
-            # self.error(SemanticErrors.AlreadyDeclared())
             f = False
             for table in self.symbolTable:
                 if self.token.name in table.table:
@@ -611,7 +608,7 @@ class Parser:
         self.symbolTable.append(SymbolTable())
         params = []
         while self.token.name not in {")"}:
-            # В params надо добавлять два токена: <type> и <id>.
+            # В params надо добавлять два токена
             # Это и есть наш один формальный параметр.
             params.append(self.declaration())
             if self.token.name != "," and self.token.name != ")":
@@ -619,16 +616,11 @@ class Parser:
             if self.token.name == ",":
                 self.next_token()
         # Добавляем локальную таблицу символов аргументы функции
-        # for i in params:
-        #     self.symbolTable[len(self.symbolTable) - 1].table[i.id] = i.type
         self.next_token()
         return NodeFormalParams(params)
 
     def local_statement(self) -> Node:
         # Обрабатываем объявление переменных и массивов.
-        # Их грамматики:
-        # переменные: <type> <id> =? <right_side>?;
-        # массивы: <type> <id> =? [ <constants>? ,? ]
         if self.token.name in help.KEY_WORDS:
             #  if self.token.name == "function":
             #      function(что-то)
