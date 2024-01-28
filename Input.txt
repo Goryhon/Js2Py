@@ -1,9 +1,12 @@
 var x = 5;
 var y = 10;
-
+var z = 8;
 function addNumbers(x, y) {
     return x + y;
 }
+
+// Комментарий
+// Запрещённые символы: ♥♦♠♣
 
 if (x > y) {
     console.log("x is greater than y");
@@ -26,3 +29,4 @@ function greet(name) {
 }
 
 greet("John");
+
